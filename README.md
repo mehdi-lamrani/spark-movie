@@ -1,12 +1,3 @@
-### Online recommendation service Using Pyspark & MLlib
-
-Download application source code from the following URL :<br/>
-https://easyupload.io/glsdw5
-
-Copy the downloaded archive to your EMR instance :
-```console
-$ scp -i ./KEY.pem online-movie-recommandations.zip ec2-user@ec2-XX-XX-XX-XX.compute-1.amazonaws.com:/home/ec2-user
-```
 
 #### Prereqs :
 
