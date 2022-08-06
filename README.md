@@ -33,7 +33,7 @@ rm -rf spark-3.3.0-bin-hadoop3.tgz
 mv spark-3.3.0-bin-hadoop3/ spark-3.3.0
 ```
 
-- Set Environment viariables
+- Set Environment variables
 ```console
 echo "export SPARK_HOME=/root/spark-3.3.0" > .bashrc
 echo "export PATH=$PATH:$SPARK_HOME/bin" > .bashrc
