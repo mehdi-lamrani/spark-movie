@@ -5,22 +5,43 @@
 sudo su
 ```
 
-Update the OS :
+- Update the OS :
+
 ```console
 yum update
 ```
 
-The CherryPy framework features a reliable, HTTP/1.1-compliant, WSGI thread-pooled webserver.
+- Clone this Git
+
+```
+yum install git -y
+https://github.com/mehdi-lamrani/spark-movie.git
+```
+
+- Install Spark 3.0
+
+```
+yum install java -y
+wget https://dlcdn.apache.org/spark/spark-3.3.0/spark-3.3.0-bin-hadoop3.tgz
+tar -xvf spark-3.3.0-bin-hadoop3.tgz 
+rm -rf spark-3.3.0-bin-hadoop3.tgz 
+mv spark-3.3.0-bin-hadoop3/ spark-3.3.0
+```
+
+- The CherryPy framework features a reliable, HTTP/1.1-compliant, WSGI thread-pooled webserver.
+
 ```console
 pip3 install CherryPy
 ```
 
-Flask is a micro web framework written in Python.
+- Flask is a micro web framework written in Python.
+
 ```console
 pip3 install Flask
 ```
 
 pandas is a data manipulation and analysis library (Cython is necessary for pandas installation).
+
 ```console
 pip3 install Cython
 pip3 install pandas
@@ -38,7 +59,7 @@ pip3 install findspark
 
 
 
-To run the server :
+- To run the app :
 ```console
 spark-submit server.py /root/spark-movies/ml-latest/movies.csv /root/spark-movies/ml-latest/ratings.csv
 ```
@@ -46,7 +67,7 @@ spark-submit server.py /root/spark-movies/ml-latest/movies.csv /root/spark-movie
 
 ### A web page :
 
-Can be accessed on : http://localhost:5432
+Can be accessed on : http://localhost(or-ec2-ip):5432
 
 ### Three rest services :
 
