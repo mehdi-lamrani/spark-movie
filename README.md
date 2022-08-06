@@ -18,10 +18,15 @@ yum install git -y
 https://github.com/mehdi-lamrani/spark-movie.git
 ```
 
-- Install Spark 3.0
+- Install java
 
 ```console
 yum install java -y
+```
+
+- Install Spark 3.0
+
+```console
 wget https://dlcdn.apache.org/spark/spark-3.3.0/spark-3.3.0-bin-hadoop3.tgz
 tar -xvf spark-3.3.0-bin-hadoop3.tgz 
 rm -rf spark-3.3.0-bin-hadoop3.tgz 
