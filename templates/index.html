@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>Online Movie Recomendations</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="{{url_for('static', filename='omr.css')}}"></script>
+
+		<!-- JQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+		<!-- Javascript code -->
+		<script src="{{url_for('static', filename='index.js')}}"></script>
+	</head>
+
+	<body>
+		<div class="container omr-container" style="max-width: 900px;">
+			<div class="omr-title">
+				<h1>Online Movie Recommendations</h1>
+			</div>
+
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item active">
+					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">User Recommendations</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Add Ratings</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Predict Rating</a>
+				</li>
+			</ul>
+
+			<div class="tab-content" id="myTabContent" style="padding: 20px;">
+
+				<!-- GET RECOMMENDATIONS PANEL -->
+
+				<div class="tab-pane fade in active" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<div style="margin-bottom: 50px;">
+						<form class="omr-form">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								<input type="text" class="form-control" id="userIdInput" placeholder="User Identifier" pattern="^\d*$" required>
+							</div>
+							<div class="input-group" style="margin-top: 20px;">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-blackboard"></i></span>
+								<input type="text" class="form-control" id="nbMoviesInput" placeholder="Number of Movies" pattern="^\d*$" required>
+							</div>
+							<!-- Submit button -->
+							<button id="get-recommendations-btn" onclick="getRecommendations(document.getElementById('userIdInput').value, document.getElementById('nbMoviesInput').value)"
+								type="button" class="btn btn-primary" style="margin-top: 20px;">Get Recommendations</button>
+						</form>
+					</div>
+					<div style="max-height:450px; overflow:auto;">
+						<table id="movies-table" class="table table-striped table-hover">
+							<thead >
+								<tr>
+									<th style="width: 5%;">#</th>
+									<th>Title</th>
+								</tr>
+							</thead>
+							<!-- WHERE BEST MOVIES WILL BE DISPLAYED -->
+							<tbody id="movies-table-body">
+								<!-- WHERE BEST MOVIES WILL BE DISPLAYED -->
+								<tr>
+									<td class="no-result-row" colspan="2">No Recommendations.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- ADD RATINGS PANEL -->
+
+				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="tab-pane fade in active" id="home" role="tabpanel" aria-labelledby="home-tab">
+						<div style="margin-bottom: 50px;">
+							<form class="omr-form">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									<input type="text" class="form-control" id="addRatingsUserId" placeholder="User Identifier" pattern="^\d*$" required>
+									<!-- Submit Button -->
+									<span class="input-group-btn">
+										<button id="add-ratings-btn" onclick="submitRatings(document.getElementById('addRatingsUserId').value)"
+											type="button" class="btn btn-primary">Validate</button>
+								   	</span>
+								</div>
+							</form>	
+							<form id="ratings-form" class="omr-form">
+								<div style="height:450px; overflow:auto; margin-top: 50px;" class="form-group">
+									<table id="ratings-table" class="table table-striped table-hover">
+										<thead>
+											<tr>
+												<th style="vertical-align: middle;">Movie Title</th>
+												<th>
+													<span style="vertical-align: middle;">Rating</span>
+													<button id="add-rating-line-btn" type="button" onclick="addRating()" class="btn btn-danger" style="float: right; margin-top: -6px; vertical-align: middle;"
+														data-toggle="tooltip" data-placement="bottom" title="Add new rating..."><strong>+</strong></button>
+												</th>
+											</tr>
+										</thead>
+										<tbody id="ratings-table-body">
+											<!-- WHERE NEW RATINGS WILL BE DISPLAYED -->
+										</tbody>
+									</table>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<!-- PREDICT RATING PANEL -->
+
+				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+					<div style="margin-bottom: 50px;">
+						<form class="omr-form">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								<input type="text" class="form-control" id="userIdPredictInput" placeholder="User Identifier" pattern="^\d*$">
+							</div>
+							<div class="input-group" style="margin-top: 20px;">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-blackboard"></i></span>
+								<input type="text" class="form-control" id="movieIdPredictInput" placeholder="Movie Identifier" 
+									onfocusout="getMovie(document.getElementById('movieIdPredictInput').value)">
+								<input type="text" class="form-control" id="movieTitlePredictInput" placeholder="Movie Title" disabled>
+							</div>
+							<!-- Submit button -->
+							<button id="get-prediction-btn" onclick="predictRating(document.getElementById('userIdPredictInput').value, document.getElementById('movieIdPredictInput').value)"
+								type="button" class="btn btn-primary" style="margin-top: 20px;">Predict Rating</button>
+						</form>
+					</div>
+					<!-- Response Panel -->
+					<div id="predited-rating-result" class="p-3 mb-2 result-div">No Rating.</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			addRating();
+		}, false);
+	</script>
+</html>

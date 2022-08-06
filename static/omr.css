@@ -1,0 +1,28 @@
+.omr-container {
+    max-width: 900px!important;
+}
+
+.omr-title {
+    margin-bottom: 40px; 
+    text-align: center;
+}
+
+.omr-form {
+    min-width: 80%;
+}
+
+.result-div {
+    border-radius: 5px;
+    color: white;
+    background-color: #343a40!important;
+    width: 60%;
+    text-align: center;
+    margin: auto;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.no-result-row {
+    text-align: center;
+}
