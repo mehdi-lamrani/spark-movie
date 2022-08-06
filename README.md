@@ -66,7 +66,7 @@ pip3 install findspark
 
 - Exposer you app to the outside world 
 ```console
-sudo sed -i "s/localhost/$(curl http://checkip.amazonaws.com)/g" ./static/index.js
+sudo sed -i "s/localhost/$(curl http://checkip.amazonaws.com)/g" /root/spark-movies/static/index.js
 ```
 :warning: remember to have your personal IP whitelisted on the security group of the EC2 instance (ask trainer/admin)
 
