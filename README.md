@@ -40,7 +40,7 @@ pip3 install findspark
 
 To run the server :
 ```console
-spark-submit server.py /root/spark-game/online-movie-recommandations/ml-latest/movies.csv /root/spark-game/online-movie-recommandations/ml-latest/ratings.csv
+spark-submit server.py /root/spark-movies/ml-latest/movies.csv /root/spark-movies/online-movie-recommandations/ml-latest/ratings.csv
 ```
 ## The application deploys :
 
