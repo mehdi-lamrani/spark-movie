@@ -59,6 +59,12 @@ findspark adds pyspark to sys.path at runtime
 pip3 install findspark
 ```
 
+- Exposer you app to the outside world 
+```console
+sudo sed -i "s/localhost/$(curl http://checkip.amazonaws.com)/g" ./static/index.js
+```
+:warning: remember to have your personal IP whitelisted on the security group of the EC2 instance (ask trainer/admin)
+
 **Our complete web service contains three Python files:**
 * ***engine.py*** defines the recommendation engine, wrapping inside all the Spark related computations.
 * ***app.py*** is a Flask web application that defines a RESTful API around the engine.
