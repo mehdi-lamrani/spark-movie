@@ -32,8 +32,8 @@ class RecommendationEngine:
     def get_movie(self, movie_id):
         if movie_id == None:
             best_movies_struct = [StructField("movieId", IntegerType(), True),
-		        StructField("title", StringType(), True),
-		        StructField("count", IntegerType(), True)]
+                        StructField("title", StringType(), True),
+                        StructField("count", IntegerType(), True)]
             best_movies_df = self.spark.createDataFrame(self.most_rated_movies, StructType(best_movies_struct))
             return best_movies_df.sample(False, fraction=0.05).select("movieId", "title").limit(1)
         else:
@@ -140,22 +140,22 @@ class RecommendationEngine:
 
         ratings_schema = StructType(ratings_struct)
 
-        # Read movies from HDFS
+        # Read movies from Local File System
         self.movies_df = self.spark.read.format("csv") \
             .option("header", "true") \
             .option("delimiter", ",") \
             .schema(movies_schema) \
-            .load(movies_set_path)
+            .load('file:///'+movies_set_path)
 
         self.movies_count = self.movies_df.count()
         print("Number of movies : {}.".format(self.movies_count))
 
-        # Read ratings from HDFS
+        # Read ratings from Local File System
         self.ratings_df = self.spark.read.format("csv") \
             .option("header", "true") \
             .option("delimiter", ",") \
             .schema(ratings_schema) \
-            .load(ratings_set_path) \
+            .load('file:///'+ratings_set_path) \
             .drop("timestamp")
 
         self.max_user_identifier = self.ratings_df.select('userId').distinct().sort(col("userId").desc()).limit(1).take(1)[0].userId
